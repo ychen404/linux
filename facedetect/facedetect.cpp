@@ -95,7 +95,8 @@ int main( int argc, const char** argv )
     {
         cout << "Video capturing has been started ..." << endl;
 
-        for(;;)
+	    // test on one image
+        for(int i = 0; i < 1; ++i)
         {
             capture >> frame;
             if( frame.empty() )
@@ -103,10 +104,7 @@ int main( int argc, const char** argv )
 
             Mat frame1 = frame.clone();
             detectAndDraw( frame1, cascade, nestedCascade, scale, tryflip );
-
-            int c = waitKey(10);
-            if( c == 27 || c == 'q' || c == 'Q' )
-                break;
+	    break;
         }
     }
     else
@@ -115,7 +113,6 @@ int main( int argc, const char** argv )
         if( !image.empty() )
         {
             detectAndDraw( image, cascade, nestedCascade, scale, tryflip );
-            waitKey(0);
         }
         else if( !inputName.empty() )
         {
@@ -136,9 +133,7 @@ int main( int argc, const char** argv )
                     if( !image.empty() )
                     {
                         detectAndDraw( image, cascade, nestedCascade, scale, tryflip );
-                        c = waitKey(0);
-                        if( c == 27 || c == 'q' || c == 'Q' )
-                            break;
+                        break;
                     }
                     else
                     {
@@ -206,6 +201,8 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 	std::cout << "Face not detected!" << std::endl;
     }
 		
+    return;
+
 
     for ( size_t i = 0; i < faces.size(); i++ )
     {
