@@ -468,6 +468,19 @@ struct sched_rt_entity {
 #endif
 } __randomize_layout;
 
+// IOT scheduler entity $$$$
+struct sched_iot_entity {
+    /*
+	 * You can maintain state information here.
+	 * This struct is per-task.
+	 */
+
+	struct list_head		run_list;
+    unsigned short			on_rq;
+    unsigned short			on_list;
+    struct sched_iot_entity		*back;
+};
+
 struct sched_dl_entity {
 	struct rb_node			rb_node;
 
@@ -602,6 +615,10 @@ struct task_struct {
 	const struct sched_class	*sched_class;
 	struct sched_entity		se;
 	struct sched_rt_entity		rt;
+
+	// $$$$
+	struct sched_iot_entity		iot_t;
+
 #ifdef CONFIG_CGROUP_SCHED
 	struct task_group		*sched_task_group;
 #endif
