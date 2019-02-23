@@ -123,6 +123,36 @@ static inline void cpu_load_update_active(struct rq *this_rq) { }
  */
 #define RUNTIME_INF	((u64)~0ULL)
 
+// $$$$
+#define MAX_IOT_PRIO 100
+
+// $$$$
+struct iot_prio_array {
+	DECLARE_BITMAP(bitmap, MAX_IOT_PRIO+1);
+	struct list_head queue[MAX_IOT_PRIO];
+};
+
+/* IOT scheduler class runqueue $$$$ */
+struct iot_rq {
+    /*
+	 * Define any runqueue members here.
+	 * You can refer to other runqueues.
+	 */
+
+	struct iot_prio_array active;
+    unsigned int iot_nr_running;
+#if defined CONFIG_SMP
+    struct {
+		int curr;
+#ifdef CONFIG_SMP
+		int next;
+#endif
+	} highest_prio;
+#endif
+
+    int iot_queued;
+};
+
 static inline int idle_policy(int policy)
 {
 	return policy == SCHED_IDLE;
@@ -132,9 +162,10 @@ static inline int fair_policy(int policy)
 	return policy == SCHED_NORMAL || policy == SCHED_BATCH;
 }
 
+// $$$$
 static inline int rt_policy(int policy)
 {
-	return policy == SCHED_FIFO || policy == SCHED_RR;
+	return policy == SCHED_FIFO || policy == SCHED_RR || policy == SCHED_IOT;
 }
 
 static inline int dl_policy(int policy)
@@ -281,8 +312,9 @@ struct cfs_bandwidth {
 	u64 quota, runtime;
 	s64 hierarchical_quota;
 	u64 runtime_expires;
+	int expires_seq;
 
-	int idle, period_active;
+	short idle, period_active;
 	struct hrtimer period_timer, slack_timer;
 	struct list_head throttled_cfs_rq;
 
@@ -488,6 +520,7 @@ struct cfs_rq {
 
 #ifdef CONFIG_CFS_BANDWIDTH
 	int runtime_enabled;
+	int expires_seq;
 	u64 runtime_expires;
 	s64 runtime_remaining;
 
@@ -711,6 +744,8 @@ struct rq {
 	struct cfs_rq cfs;
 	struct rt_rq rt;
 	struct dl_rq dl;
+
+	struct iot_rq iot_rq;
 
 #ifdef CONFIG_FAIR_GROUP_SCHED
 	/* list of leaf cfs_rq on this cpu: */
@@ -1491,6 +1526,8 @@ static inline void set_curr_task(struct rq *rq, struct task_struct *curr)
 #define for_each_class(class) \
    for (class = sched_class_highest; class; class = class->next)
 
+// $$$$
+extern const struct sched_class iot_sched_class;
 extern const struct sched_class stop_sched_class;
 extern const struct sched_class dl_sched_class;
 extern const struct sched_class rt_sched_class;
@@ -1541,6 +1578,9 @@ extern void update_max_interval(void);
 extern void init_sched_dl_class(void);
 extern void init_sched_rt_class(void);
 extern void init_sched_fair_class(void);
+
+// $$$$
+extern void init_sched_iot_class(void);
 
 extern void resched_curr(struct rq *rq);
 extern void resched_cpu(int cpu);
@@ -1984,6 +2024,9 @@ print_numa_stats(struct seq_file *m, int node, unsigned long tsf,
 extern void init_cfs_rq(struct cfs_rq *cfs_rq);
 extern void init_rt_rq(struct rt_rq *rt_rq);
 extern void init_dl_rq(struct dl_rq *dl_rq);
+
+// $$$$
+extern void init_iot_rq(struct iot_rq *iot_rq);
 
 extern void cfs_bandwidth_usage_inc(void);
 extern void cfs_bandwidth_usage_dec(void);
