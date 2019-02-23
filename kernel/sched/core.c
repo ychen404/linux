@@ -3987,6 +3987,11 @@ static void __setscheduler(struct rq *rq, struct task_struct *p,
 		p->sched_class = &rt_sched_class;
 	else
 		p->sched_class = &fair_sched_class;
+	
+	// $$$$
+	if(attr->sched_policy == SCHED_IOT){
+		p->sched_class = &iot_sched_class;
+	}
 }
 
 /*
@@ -5049,6 +5054,7 @@ SYSCALL_DEFINE1(sched_get_priority_max, int, policy)
 	int ret = -EINVAL;
 
 	switch (policy) {
+	case SCHED_IOT: // $$$$
 	case SCHED_FIFO:
 	case SCHED_RR:
 		ret = MAX_USER_RT_PRIO-1;
@@ -5076,6 +5082,7 @@ SYSCALL_DEFINE1(sched_get_priority_min, int, policy)
 	int ret = -EINVAL;
 
 	switch (policy) {
+	case SCHED_IOT: // $$$$
 	case SCHED_FIFO:
 	case SCHED_RR:
 		ret = 1;
@@ -5757,6 +5764,9 @@ void __init sched_init_smp(void)
 	init_sched_rt_class();
 	init_sched_dl_class();
 
+	// $$$$
+	init_sched_iot_class();
+
 	sched_smp_initialized = true;
 }
 
@@ -5871,6 +5881,10 @@ void __init sched_init(void)
 		init_cfs_rq(&rq->cfs);
 		init_rt_rq(&rq->rt);
 		init_dl_rq(&rq->dl);
+
+		// $$$$
+		init_iot_rq(&rq->iot_rq);
+
 #ifdef CONFIG_FAIR_GROUP_SCHED
 		root_task_group.shares = ROOT_TASK_GROUP_LOAD;
 		INIT_LIST_HEAD(&rq->leaf_cfs_rq_list);

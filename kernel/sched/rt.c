@@ -2349,10 +2349,10 @@ static unsigned int get_rr_interval_rt(struct rq *rq, struct task_struct *task)
 }
 
 const struct sched_class rt_sched_class = {
-	.next			= &fair_sched_class,
+	.next				= &iot_sched_class,
 	.enqueue_task		= enqueue_task_rt,
 	.dequeue_task		= dequeue_task_rt,
-	.yield_task		= yield_task_rt,
+	.yield_task			= yield_task_rt,
 
 	.check_preempt_curr	= check_preempt_curr_rt,
 
@@ -2362,15 +2362,15 @@ const struct sched_class rt_sched_class = {
 #ifdef CONFIG_SMP
 	.select_task_rq		= select_task_rq_rt,
 
-	.set_cpus_allowed       = set_cpus_allowed_common,
-	.rq_online              = rq_online_rt,
-	.rq_offline             = rq_offline_rt,
-	.task_woken		= task_woken_rt,
+	.set_cpus_allowed	= set_cpus_allowed_common,
+	.rq_online			= rq_online_rt,
+	.rq_offline			= rq_offline_rt,
+	.task_woken			= task_woken_rt,
 	.switched_from		= switched_from_rt,
 #endif
 
-	.set_curr_task          = set_curr_task_rt,
-	.task_tick		= task_tick_rt,
+	.set_curr_task      = set_curr_task_rt,
+	.task_tick			= task_tick_rt,
 
 	.get_rr_interval	= get_rr_interval_rt,
 
@@ -2689,16 +2689,3 @@ int sched_rr_handler(struct ctl_table *table, int write,
 	mutex_unlock(&mutex);
 	return ret;
 }
-
-#ifdef CONFIG_SCHED_DEBUG
-void print_rt_stats(struct seq_file *m, int cpu)
-{
-	rt_rq_iter_t iter;
-	struct rt_rq *rt_rq;
-
-	rcu_read_lock();
-	for_each_rt_rq(rt_rq, iter, cpu_rq(cpu))
-		print_rt_rq(m, cpu, rt_rq);
-	rcu_read_unlock();
-}
-#endif /* CONFIG_SCHED_DEBUG */
