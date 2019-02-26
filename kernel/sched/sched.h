@@ -132,6 +132,14 @@ struct iot_prio_array {
 	struct list_head queue[MAX_IOT_PRIO];
 };
 
+/* IoT task list $$$$ */
+struct iot_task {
+    unsigned int iot_id;
+    unsigned long long absolute_deadline;
+    struct list_head iot_list_node;
+    struct task_struct *task;
+};
+
 /* IOT scheduler class runqueue $$$$ */
 struct iot_rq {
     /*
