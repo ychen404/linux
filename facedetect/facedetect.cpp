@@ -95,7 +95,6 @@ int main( int argc, const char** argv )
     {
         cout << "Video capturing has been started ..." << endl;
 
-	    // test on one image
         for(int i = 0; i < 1; ++i)
         {
             capture >> frame;
@@ -105,6 +104,7 @@ int main( int argc, const char** argv )
             Mat frame1 = frame.clone();
             detectAndDraw( frame1, cascade, nestedCascade, scale, tryflip );
 	    break;
+
         }
     }
     else
@@ -133,7 +133,7 @@ int main( int argc, const char** argv )
                     if( !image.empty() )
                     {
                         detectAndDraw( image, cascade, nestedCascade, scale, tryflip );
-                        break;
+                            break;
                     }
                     else
                     {
