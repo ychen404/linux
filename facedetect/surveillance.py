@@ -5,7 +5,7 @@ SETUP:
 
     -   -->     GND     -->     PIN6
     +   -->     5V      -->     PIN4
-    S   -->     GPIO18  -->     PIN40
+    S   -->     GPIO21  -->     PIN40
 
 '''
 
