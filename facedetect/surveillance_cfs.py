@@ -39,7 +39,6 @@ while flag == 0:
             print "Intruder detected"
             on = time.time()
             flag = 1
-            subprocess.call(['sudo','chrt','-i','98','python','take_snapshot.py','frame.jpg'])
-            subprocess.call(['sudo', 'chrt', '-i','98', './facedetect', 'frame.jpg'])
+            subprocess.call(['python','take_snapshot.py','frame.jpg'])
+            subprocess.call(['./facedetect', 'frame.jpg'])
         time.sleep(0.1)
-        

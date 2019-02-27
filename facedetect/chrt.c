@@ -213,8 +213,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    printf("[FRISK] setting up priority %d\n", priority);
-
     sp.sched_priority = priority;
     if (sched_setscheduler(pid, policy, &sp) == -1) {
         perror("sched_setscheduler");
