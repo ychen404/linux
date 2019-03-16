@@ -110,10 +110,11 @@ static void enqueue_task_iot(struct rq *rq, struct task_struct *p, int flags)
      * ENQUEUE_MIGRATED  - the task was migrated during wakeup
      */
 
-     //FIXME: Initialize the bitmap (clear bits)
-     //FIXME: Initialize each linked list corresponding to bitmap
-     //FIXME: Set highest priority value
-     //FIXME: Initialize queued flag, indicating no tasks are queued
+     // FIXME: add the entity to the run queue
+     // FIXME: update the bitmap of the priority array
+     // FIXME: set the total number of running tasks in struct iot_rq
+     // FIXME: set the total number of running tasks in struct rq 
+     
 }
 
 /* [required to implement] Remove task from runqueue */
