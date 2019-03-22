@@ -112,8 +112,8 @@ static void enqueue_task_iot(struct rq *rq, struct task_struct *p, int flags)
 
      // FIXME: add the entity to the run queue
      // FIXME: update the bitmap of the priority array
-     // FIXME: set the total number of running tasks in struct iot_rq
-     // FIXME: set the total number of running tasks in struct rq 
+     // FIXME: set the total number of runnable tasks in struct iot_rq
+     // FIXME: set the total number of runnable tasks in struct rq 
      
 }
 
@@ -147,7 +147,7 @@ static void dequeue_task_iot(struct rq *rq, struct task_struct *p, int flags)
      // FIXME: iterate through the struct iot_entities and find the entity to remove
      // FIXME: set the status of the struct sched_iot_entity to be dequeued
      // FIXME: remove sched_iot_entity from the list
-     // FIXME: decrement the total number of running tasks in struct iot_rq
+     // FIXME: decrement the total number of runnable tasks in struct iot_rq
 }
 
 
@@ -239,7 +239,7 @@ static void check_preempt_curr_iot(struct rq *rq, struct task_struct *p, int fla
     // Note that this function is not strictly required for you to implement the basic scheduler for Project 2-2
     
     /*
-     * In this function, you will be choosing what do when a new
+     * In this function, you will be choosing what to do when a new
      * task has become runnable. Mainly, you will decide whether
      * this new task will preempt the task that is currently
      * running.
@@ -345,7 +345,7 @@ static void put_prev_task_iot(struct rq *rq, struct task_struct *p) {
     
     /*
      * This function is called whenever a task is switched out of the
-     * CPU. The function that will be running next is chosen by
+     * CPU. The task that will be running next is chosen by
      * pick_next_task(). You can choose to perform various upkeeping
      * and functions during the task switching process both here and
      * pick_next_task(), or all in pick_next_task(). Again, this will
