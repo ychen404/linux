@@ -16,7 +16,7 @@
  *
  * Regarding to implementing other functions.
  * The basic requirement is to have the basic scheduler working without task preemption and load-balancing while running on multiple CPUs.
- * However, students are encouraged to add the preemption and load-balancing if the time is alloweded
+ * However, students are encouraged to add the preemption and load-balancing if the time allows
  */
 
 /*
