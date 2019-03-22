@@ -147,7 +147,7 @@ static void dequeue_task_iot(struct rq *rq, struct task_struct *p, int flags)
      // FIXME: iterate through the struct iot_entities and find the entity to remove
      // FIXME: set the status of the struct sched_iot_entity to be dequeued
      // FIXME: remove sched_iot_entity from the list
-     // FIXME: decrement the total number of running queues in struct iot_rq
+     // FIXME: decrement the total number of running tasks in struct iot_rq
 }
 
 
